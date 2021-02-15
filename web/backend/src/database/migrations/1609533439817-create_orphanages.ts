@@ -1,0 +1,61 @@
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
+
+export class createOrphanages1609533439817 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    //esse método serve para realizar alterações no banco de dados
+    //Criar tabelas, criar novo campo, deletar algum campo.
+    await queryRunner.createTable(
+      new Table({
+        name: "orphanages",
+        columns: [
+          {
+            name: "id",
+            type: "integer",
+            unsigned: true,
+            isPrimary: true,
+            isGenerated: true,
+            generationStrategy: "increment",
+          },
+          {
+            name: "name",
+            type: "varchar",
+          },
+          {
+            name: "latitude",
+            type: "decimal",
+            scale: 10,
+            precision: 2,
+          },
+          {
+            name: "longitude",
+            type: "decimal",
+            scale: 10,
+            precision: 2,
+          },
+          {
+            name: "about",
+            type: "text",
+          },
+          {
+            name: "instructions",
+            type: "text",
+          },
+          {
+            name: "open_on_weekends",
+            type: "boolean",
+            default: false,
+          },
+          {
+            name: "opening_hours",
+            type: "varchar",
+          },
+        ],
+      })
+    );
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    //esse método serve para desfazer oq o método up fez
+    await queryRunner.dropTable("orphanages");
+  }
+}
